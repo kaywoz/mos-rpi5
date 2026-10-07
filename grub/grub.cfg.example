@@ -1,0 +1,15 @@
+# Entry that works on a Pi 5 in UEFI Device Tree mode (append to /boot/grub/grub.cfg
+# and point `set default=` at it; the keyboard often does not work in GRUB over KVM).
+# /bcm2712-d-rpi-5-b.dtb is the MOS-built dtb on the MOS partition (mounted at /boot).
+menuentry "MOS (RP1 early modules, D0 dtb)" {
+  devicetree /bcm2712-d-rpi-5-b.dtb
+  linux  /image loglevel=7 ignore_loglevel console=tty1 console=ttyAMA10,115200
+  initrd /rootfs /rp1extra.cpio
+}
+
+# Same, with the CPU thermal patch (dtb/apply-thermal.sh) and a fixed MAC (tools/setmac.py):
+# menuentry "MOS (RP1 early modules, D0 dtb + thermal)" {
+#   devicetree /bcm2712-d-rpi-5-b-thermal.dtb
+#   linux  /image loglevel=7 ignore_loglevel console=tty1 console=ttyAMA10,115200
+#   initrd /rootfs /rp1extra.cpio
+# }

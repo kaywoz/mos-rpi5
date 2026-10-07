@@ -1,0 +1,17 @@
+# Generated, board-specific files: never commit these.
+# rp1extra.cpio carries modules for one kernel only
+*.cpio
+# built or patched dtbs may contain a per-board MAC; use dtb/apply-thermal.sh instead
+*.dtb
+# setmac.py backups
+*.dtb.bak
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editors
+.DS_Store
+*.swp
+*~

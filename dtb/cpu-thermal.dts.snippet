@@ -1,0 +1,36 @@
+/* CPU temperature sensor for the MOS-built bcm2712 dtbs (additions only).
+ * The kernel already ships the driver (bcm2711_thermal, "brcm,bcm2711-thermal").
+ * Nodes taken from Raspberry Pi's tree (bcm2712-ds.dtsi), GPL-2.0.
+ * Adapt the &soc label to your tree. Add a pwm-fan + cooling-maps later for the fan. */
+
+/ {
+	thermal-zones {
+		cpu-thermal {
+			polling-delay-passive = <1000>;
+			polling-delay = <1000>;
+			coefficients = <(-550) 450000>;
+			thermal-sensors = <&thermal>;
+
+			trips {
+				cpu-crit {
+					temperature = <110000>;
+					hysteresis = <0>;
+					type = "critical";
+				};
+			};
+		};
+	};
+};
+
+&soc {
+	avs_monitor: avs-monitor@7d542000 {
+		compatible = "brcm,bcm2711-avs-monitor", "syscon", "simple-mfd";
+		reg = <0x7d542000 0xf00>;
+		status = "okay";
+
+		thermal: thermal {
+			compatible = "brcm,bcm2711-thermal";
+			#thermal-sensor-cells = <0>;
+		};
+	};
+};
