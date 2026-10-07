@@ -1,0 +1,6 @@
+kaywoz
+    Idea, hardware, all testing on the Raspberry Pi 5, contact with the MOS developers.
+
+Claude (Anthropic's AI assistant, via Claude Code/Cowork)
+    Co-author: research, debugging, the scripts (tools/, dtb/apply-thermal.sh),
+    the dts snippet, and the documentation, written from kaywoz's test results.

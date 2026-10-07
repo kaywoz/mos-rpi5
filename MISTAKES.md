@@ -2,6 +2,19 @@
 
 Keep this file. Whenever a belief turns out wrong, add an entry (newest first) so the next reader doesn't repeat it. Format: what we thought, what was true, how we found out, lesson.
 
+## 2026-10-07: quick start step was a command, not a procedure
+
+- **Thought:** "build the extra initrd on a running MOS: see boot-recipe" was enough for a reader.
+- **True:** it didn't say where files must live (MOS's root is RAM), how to get them onto the Pi, how to find the modules, or how to add and activate the GRUB entry. Nobody could follow it without the chat history.
+- **Found by:** the repo owner, reading the README as a new user.
+- **Lesson:** a setup step is a script (`tools/install-rp1-boot.sh`) plus the exact command to run it. The script was only tested against a mock MOS (fake `/boot`, `modinfo`, `modprobe`); it hasn't been run on a real MOS yet.
+
+## 2026-10-07: license picked without saying why
+
+- **Thought:** MIT was a fine default.
+- **True:** the repo ships dts nodes derived from the kernel tree (GPL-2.0), so one GPL-2.0 license for the whole repo is the coherent choice. Repo license is now GPL-2.0-only, same as the kernel.
+- **Lesson:** state the license reasoning, don't just default.
+
 ## 2026-10-07: analysed the wrong dtb
 
 - **Thought:** the file named `bcm2712-d-rpi-5-b.dtb` we were looking at was the one MOS loads, and it already had the CPU sensor nodes.

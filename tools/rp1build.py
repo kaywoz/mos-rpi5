@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-2.0-only
+# Copyright (c) 2026 kaywoz
 """rp1build.py - build an extra initrd that loads the Pi 5 RP1 modules before
 MOS's init looks for its boot media (needed for UEFI Device Tree mode, where the
 USB ports sit behind the RP1 chip).
