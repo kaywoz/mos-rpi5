@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: GPL-2.0-only
-# Copyright (c) 2026 kaywoz
 """setmac.py - set the Pi 5 onboard Ethernet (RP1 GEM) MAC address in a dtb.
 
 The dtb has `local-mac-address = [00 00 00 00 00 00]` on ethernet@40100000.
