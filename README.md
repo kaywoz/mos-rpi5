@@ -18,15 +18,10 @@ Tested on: Pi 5 8 GB (booted with the D0 dtb, stepping not verified), Geekworm X
 ## Quick start
 
 1. **Hardware:** FAT32 SD in the Pi's internal slot with the [rpi5-uefi](https://github.com/NumberOneGit/rpi5-uefi) D0 firmware. MOS on a USB drive (ext4 label `MOS` + small vfat ESP), as in the MOS ARM docs.
-2. **Boot MOS once the normal way** (UEFI in ACPI mode, stock GRUB entry). Get the `tools/` folder onto the Pi (USB stick, or `scp -r tools root@<pi-ip>:/root/` from your PC) and, as root on the Pi:
-   ```sh
-   cd /root/tools && sh install-rp1-boot.sh --default
-   ```
-   It builds `/boot/rp1extra.cpio`, adds the GRUB entry and makes it the default. Backups of `grub.cfg` are kept. What it does and why: [docs/boot-recipe.md](docs/boot-recipe.md).
-3. **Reboot, press Esc or Del at the Pi logo, and set** Device Manager → Raspberry Pi Configuration → ACPI / Device Tree → **Device Tree**. Save and boot: MOS comes up in Device Tree mode.
-4. Optional: CPU temperature ([dtb/](dtb/)) and a fixed MAC ([tools/setmac.py](tools/setmac.py)).
-
-To go back to ACPI mode: run `sh /boot/mos-rpi5/install-rp1-boot.sh --stock` first, then set UEFI to ACPI. Doing it in the other order leaves GRUB pointing at an entry that doesn't match the mode (black screen, [issue 2](docs/known-issues.md)).
+2. **UEFI:** Device Manager → Raspberry Pi Configuration → ACPI / Device Tree → **Device Tree**.
+3. **Build the extra initrd** on a running MOS (first boot in ACPI mode is fine): see [docs/boot-recipe.md](docs/boot-recipe.md). Output: `/boot/rp1extra.cpio`.
+4. **GRUB:** add the entry from [grub/grub.cfg.example](grub/grub.cfg.example) and make it the default.
+5. Optional: CPU temperature ([dtb/](dtb/)) and a fixed MAC ([tools/setmac.py](tools/setmac.py)).
 
 ## Why so much? (3 lines)
 
@@ -43,17 +38,12 @@ If the devs build the RP1 drivers in (`=y`) the extra initrd goes away entirely.
 | [docs/boot-recipe.md](docs/boot-recipe.md) | the boot recipe, step by step |
 | [docs/known-issues.md](docs/known-issues.md) | symptom, cause, fix |
 | [MISTAKES.md](MISTAKES.md) | what we got wrong and corrected (read before trusting a claim) |
-| [tools/install-rp1-boot.sh](tools/install-rp1-boot.sh) | the setup script: builds `rp1extra.cpio`, adds the GRUB entry |
-| [tools/rp1build.py](tools/rp1build.py) | builds `rp1extra.cpio` (called by the script) |
+| [tools/rp1build.py](tools/rp1build.py) | builds `rp1extra.cpio` |
 | [tools/setmac.py](tools/setmac.py) | writes a fixed MAC into the dtb |
 | [dtb/](dtb/) | CPU thermal patch (dts snippet + script for a prebuilt dtb) |
 | [grub/grub.cfg.example](grub/grub.cfg.example) | working GRUB entry |
-| [LICENSE](LICENSE), [.gitignore](.gitignore), [AUTHORS](AUTHORS) | GPL-2.0; keeps generated dtbs/cpio out of git; who made this |
-
-## Credits
-
-Made by **kaywoz** together with **Claude** (Anthropic's AI assistant), who is a co-author: Claude researched and debugged the boot problems, wrote the scripts and the dts snippet, and wrote these docs, working from the results kaywoz measured on real hardware. Everything here was tested on one Pi 5 only, and Claude makes mistakes: see [MISTAKES.md](MISTAKES.md) for the ones already caught, and please add new ones. Commits co-authored by Claude carry a `Co-Authored-By` trailer.
+| [LICENSE](LICENSE), [.gitignore](.gitignore) | MIT; keeps generated dtbs/cpio out of git |
 
 ## License
 
-[GPL-2.0-only](LICENSE). The same license as the Linux kernel, which matters because the thermal nodes in `dtb/` come from Raspberry Pi's kernel tree.
+[MIT](LICENSE), except `dtb/`: the thermal nodes are derived from Raspberry Pi's kernel tree and keep that tree's license (GPL-2.0).
