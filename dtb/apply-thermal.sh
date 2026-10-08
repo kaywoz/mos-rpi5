@@ -1,4 +1,6 @@
 #!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+# Copyright (c) 2026 kaywoz
 # Add the CPU thermal nodes to a MOS-built bcm2712-d-rpi-5-b.dtb without kernel sources.
 # Needs fdtput (package: device-tree-compiler), so run it on a PC, then copy the result to /boot.
 # Usage: apply-thermal.sh in.dtb out.dtb
